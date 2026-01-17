@@ -7,151 +7,122 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🍽️ Restaurant POS System</h1>
-            <nav>
-                <button class="nav-btn active" data-tab="menu">Menu</button>
-                <button class="nav-btn" data-tab="cart">Cart</button>
-            </nav>
-            <div class="settings-container">
-                <button class="settings-btn" id="settings-toggle">
-                    <span class="settings-icon">⚙️</span>
-                </button>
-                <div class="settings-dropdown" id="settings-dropdown">
-                    <button class="settings-menu-item" data-tab="reports">📊 Reports</button>
-                    <button class="settings-menu-item" data-tab="cancelled">❌ Cancelled Items</button>
-                    <button class="settings-menu-item" data-tab="manage">🔧 Manage Menu</button>
+    <div class="app-container">
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1>Restaurant POS System</h1>
                 </div>
-            </div>
-        </header>
-
-        <!-- Add to Cart Notification -->
-        <div id="cart-notification" class="cart-notification">
-            <div class="notification-content">
-                <span class="notification-icon">✓</span>
-                <span class="notification-message">Item added to cart!</span>
-                <button class="btn btn-primary btn-small" id="go-to-cart-btn">Go to Cart</button>
-            </div>
-        </div>
-
-        <!-- Menu Tab -->
-        <section id="menu-tab" class="tab-content active">
-            <h2>Menu</h2>
-            <div class="menu-grid" id="menu-grid">
-                <!-- Menu items will be dynamically loaded -->
-            </div>
-        </section>
-
-        <!-- Cart Tab -->
-        <section id="cart-tab" class="tab-content">
-            <h2>Shopping Cart</h2>
-            <div class="cart-container">
-                <div class="cart-items" id="cart-items">
-                    <p class="empty-cart">Your cart is empty</p>
-                </div>
-                <div class="cart-summary">
-                    <div class="cart-total">
-                        <h3>Total: ₹<span id="cart-total">0.00</span></h3>
-                    </div>
-                    <div class="cart-actions">
-                        <button class="btn btn-danger" id="clear-cart-btn">Clear Cart</button>
-                        <button class="btn btn-primary" id="pay-now-btn">Pay Now</button>
+                <div class="header-center">
+                    <div class="code-billing-area">
+                        <label for="code-input">Enter Item Code:</label>
+                        <input type="text" id="code-input" class="code-input" placeholder="Type item code (e.g., c, d, i)" autocomplete="off">
+                        <div class="code-hint">Codes: <span id="item-codes-display"></span></div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Reports Tab -->
-        <section id="reports-tab" class="tab-content">
-            <h2>Sales Report</h2>
-            <div class="report-controls">
-                <div class="date-range-container">
-                    <div class="date-input-group">
-                        <label for="report-from-date">From Date:</label>
-                        <input type="date" id="report-from-date" name="report-from-date">
-                    </div>
-                    <div class="date-input-group">
-                        <label for="report-to-date">To Date:</label>
-                        <input type="date" id="report-to-date" name="report-to-date">
+                <div class="header-right">
+                    <div class="user-profile" id="admin-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin&background=20a085&color=fff" alt="User" class="profile-img">
+                        <div class="profile-info">
+                            <div class="profile-name">Admin</div>
+                            <div class="profile-role">Admin</div>
+                        </div>
+                        <div class="admin-dropdown" id="admin-dropdown">
+                            <a href="#" class="admin-menu-item" data-section="reports">📊 Reports</a>
+                            <a href="#" class="admin-menu-item" data-section="cancelled">❌ Cancelled Items</a>
+                            <a href="#" class="admin-menu-item" data-section="manage-dishes">🔧 Manage Dishes</a>
+                            <a href="#" class="admin-menu-item" data-section="logout">🚪 Logout</a>
+                        </div>
                     </div>
                 </div>
-                <div class="report-buttons">
-                    <button class="btn btn-primary" id="view-report-btn">View Report</button>
-                    <button class="btn btn-secondary" id="download-report-btn" style="display: none;">Download PDF</button>
+            </header>
+
+            <!-- Menu Section -->
+            <section class="menu-section">
+                <h2 class="section-title">Foodies Menu</h2>
+                <div class="category-tabs">
+                    <button class="category-tab active" data-category="all">
+                        <span class="category-icon">🍽️</span>
+                        All Menu <span class="category-count">0</span>
+                    </button>
+                    <button class="category-tab" data-category="special">
+                        <span class="category-icon">⭐</span>
+                        Special <span class="category-count">0</span>
+                    </button>
+                    <button class="category-tab" data-category="breakfast">
+                        <span class="category-icon">🍳</span>
+                        Breakfast <span class="category-count">0</span>
+                    </button>
+                    <button class="category-tab" data-category="beverages">
+                        <span class="category-icon">☕</span>
+                        Beverages <span class="category-count">0</span>
+                    </button>
+                    <button class="category-tab" data-category="snacks">
+                        <span class="category-icon">🍿</span>
+                        Snacks <span class="category-count">0</span>
+                    </button>
+                </div>
+                <div class="menu-grid" id="menu-grid">
+                    <!-- Menu items will be dynamically loaded -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Order Panel -->
+        <aside class="order-panel">
+            <div class="order-panel-header">
+                <h3>Order Details</h3>
+                <div class="order-actions">
+                    <button class="icon-btn" id="delete-order-btn" title="Clear Cart">🗑️</button>
                 </div>
             </div>
-            <div class="report-results" id="report-results">
-                <p>Select date range and click "View Report" to view sales data.</p>
-            </div>
-        </section>
 
-        <!-- Cancelled Items Tab -->
-        <section id="cancelled-tab" class="tab-content">
-            <h2>Cancelled Items Report</h2>
-            <div class="report-controls">
-                <label for="cancelled-date">Select Date:</label>
-                <input type="date" id="cancelled-date" name="cancelled-date">
-                <button class="btn btn-primary" id="view-cancelled-btn">View Cancelled Items</button>
-            </div>
-            <div class="report-results" id="cancelled-results">
-                <p>Select a date and click "View Cancelled Items" to view cancelled orders.</p>
-            </div>
-        </section>
-
-        <!-- Manage Menu Tab -->
-        <section id="manage-tab" class="tab-content">
-            <h2>Manage Menu</h2>
-            <div class="manage-container">
-                <div class="add-item-form">
-                    <h3>Add New Item</h3>
-                    <form id="add-item-form">
-                        <input type="text" id="item-name" placeholder="Item Name" required>
-                        <input type="text" id="item-description" placeholder="Description">
-                        <input type="number" id="item-price" placeholder="Price (₹)" step="0.01" required>
-                        <input type="text" id="item-category" placeholder="Category" required>
-                        <input type="url" id="item-image" placeholder="Image URL (optional)">
-                        <button type="submit" class="btn btn-primary">Add Item</button>
-                    </form>
-                    <div class="gpay-settings" style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee;">
-                        <h3>GPay QR Code Settings</h3>
-                        <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Upload QR code image or enter image URL:</p>
-                        <input type="file" id="gpay-qr-file" accept="image/*" style="width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #ddd; border-radius: 6px;">
-                        <p style="text-align: center; color: #999; margin: 10px 0;">OR</p>
-                        <input type="url" id="gpay-qr-url" placeholder="GPay QR Code Image URL" style="width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #ddd; border-radius: 6px;">
-                        <div id="gpay-qr-preview" style="margin: 15px 0; text-align: center;"></div>
-                        <button type="button" class="btn btn-primary" id="save-gpay-qr-btn">Save GPay QR Code</button>
+            <div class="order-panel-content">
+                <div class="ordered-items-section">
+                    <h3>Ordered Items (<span id="ordered-items-count">0</span>)</h3>
+                    <div class="ordered-items-list" id="cart-items">
+                        <p class="empty-cart">No items added yet</p>
                     </div>
                 </div>
-                <div class="menu-list">
-                    <h3>Current Menu Items</h3>
-                    <div id="manage-menu-list">
-                        <!-- Menu items for management will be loaded here -->
+
+                <div class="payment-summary">
+                    <h3>Payment Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>₹<span id="subtotal">0.00</span></span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span>₹<span id="tax">0.00</span></span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Donation</span>
+                        <span>₹<span id="donation">0.00</span></span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span>Total Payable</span>
+                        <span>₹<span id="cart-total">0.00</span></span>
+                    </div>
+                </div>
+
+                <div class="payment-method-section">
+                    <h3>Payment Method</h3>
+                    <div class="payment-method-tabs">
+                        <button class="payment-tab active" data-method="cash">Cash</button>
+                        <button class="payment-tab" data-method="card">Card</button>
+                        <button class="payment-tab" data-method="scan">Scan</button>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
 
-    <!-- Payment Method Selection Modal -->
-    <div id="payment-method-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="close-payment-method">&times;</span>
-            <h2>Select Payment Method</h2>
-            <div class="payment-methods">
-                <button class="payment-method-btn" id="cash-payment-btn">
-                    <span class="payment-icon">💵</span>
-                    <span>Cash</span>
-                </button>
-                <button class="payment-method-btn" id="gpay-payment-btn">
-                    <span class="payment-icon">📱</span>
-                    <span>GPay</span>
+            <div class="order-panel-footer">
+                <button class="btn btn-primary" id="place-order-btn" style="width: 100%;">
+                    <span>✅</span> Confirm Order
                 </button>
             </div>
-            <div class="modal-actions">
-                <button class="btn btn-danger" id="cancel-payment-btn">Cancel Order</button>
-            </div>
-        </div>
+        </aside>
     </div>
 
     <!-- GPay QR Code Modal -->
@@ -159,15 +130,19 @@
         <div class="modal-content">
             <span class="close" id="close-gpay-modal">&times;</span>
             <h2>GPay Payment</h2>
-            <div class="qr-container">
+            <div class="qr-container" id="gpay-qr-section">
                 <div id="gpay-qr-container">
                     <img id="gpay-qr-image" src="" alt="GPay QR Code" style="max-width: 100%; display: none;">
                     <p>Total Amount: ₹<span id="gpay-amount">0.00</span></p>
                     <p class="payment-instruction">Scan the QR code to pay with GPay</p>
                 </div>
             </div>
-            <div class="modal-actions">
-                <button class="btn btn-success" id="receive-payment-btn">Receive Payment</button>
+            <div id="gpay-bill-receipt" class="bill-receipt" style="display: none;">
+                <!-- Bill will be displayed here -->
+            </div>
+            <div class="modal-actions" id="gpay-modal-actions">
+                <button class="btn btn-success" id="receive-payment-btn">Receive</button>
+                <button class="btn btn-secondary" id="not-receive-btn">Not Receive</button>
                 <button class="btn btn-danger" id="cancel-gpay-btn">Cancel Order</button>
             </div>
         </div>
@@ -182,11 +157,103 @@
                 <div class="amount-display">
                     <h3>Total Amount: ₹<span id="cash-amount">0.00</span></h3>
                 </div>
+                <div class="cash-input-group">
+                    <label for="received-amount">Received Amount (₹):</label>
+                    <input type="number" id="received-amount" class="cash-input" placeholder="Enter amount received" step="0.01" min="0" autocomplete="off">
+                </div>
+                <div class="return-amount-display" id="return-amount-container" style="display: none;">
+                    <div class="return-amount-row">
+                        <span>Return Amount (₹):</span>
+                        <span id="return-amount" class="return-amount-value">0.00</span>
+                    </div>
+                </div>
                 <div class="modal-actions">
                     <button class="btn btn-success" id="receive-cash-btn">Receive Payment</button>
                     <button class="btn btn-danger" id="cancel-cash-btn">Cancel Order</button>
                 </div>
             </div>
+            <div id="cash-bill-receipt" class="bill-receipt" style="display: none;">
+                <!-- Bill will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports Modal/Section (Hidden by default) -->
+    <div id="reports-section" class="full-section" style="display: none;">
+        <div class="section-header">
+            <h2>Sales Report</h2>
+            <button class="close-section-btn" id="close-reports-btn">×</button>
+        </div>
+        <div class="report-controls">
+            <div class="date-range-container">
+                <div class="date-input-group">
+                    <label for="report-from-date">From Date:</label>
+                    <input type="date" id="report-from-date" name="report-from-date">
+                </div>
+                <div class="date-input-group">
+                    <label for="report-to-date">To Date:</label>
+                    <input type="date" id="report-to-date" name="report-to-date">
+                </div>
+            </div>
+            <div class="report-buttons">
+                <button class="btn btn-primary" id="view-report-btn">View Report</button>
+                <button class="btn btn-secondary" id="download-report-btn" style="display: none;">Download PDF</button>
+            </div>
+        </div>
+        <div class="report-results" id="report-results">
+            <p>Select date range and click "View Report" to view sales data.</p>
+        </div>
+    </div>
+
+    <!-- Manage Dishes Section (Hidden by default) -->
+    <div id="manage-dishes-section" class="full-section" style="display: none;">
+        <div class="section-header">
+            <h2>Manage Dishes</h2>
+            <button class="close-section-btn" id="close-manage-btn">×</button>
+        </div>
+        <div class="manage-container">
+            <div class="add-item-form">
+                <h3>Add New Item</h3>
+                <form id="add-item-form">
+                    <input type="text" id="item-name" placeholder="Item Name" required>
+                    <input type="text" id="item-description" placeholder="Description">
+                    <input type="number" id="item-price" placeholder="Price (₹)" step="0.01" required>
+                    <input type="text" id="item-category" placeholder="Category" required>
+                    <input type="url" id="item-image" placeholder="Image URL (optional)">
+                    <button type="submit" class="btn btn-primary">Add Item</button>
+                </form>
+                <div class="gpay-settings" style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee;">
+                    <h3>GPay QR Code Settings</h3>
+                    <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Upload QR code image or enter image URL:</p>
+                    <input type="file" id="gpay-qr-file" accept="image/*" style="width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #ddd; border-radius: 6px;">
+                    <p style="text-align: center; color: #999; margin: 10px 0;">OR</p>
+                    <input type="url" id="gpay-qr-url" placeholder="GPay QR Code Image URL" style="width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #ddd; border-radius: 6px;">
+                    <div id="gpay-qr-preview" style="margin: 15px 0; text-align: center;"></div>
+                    <button type="button" class="btn btn-primary" id="save-gpay-qr-btn">Save GPay QR Code</button>
+                </div>
+            </div>
+            <div class="menu-list">
+                <h3>Current Menu Items</h3>
+                <div id="manage-menu-list">
+                    <!-- Menu items for management will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancelled Items Section (Hidden by default) -->
+    <div id="cancelled-section" class="full-section" style="display: none;">
+        <div class="section-header">
+            <h2>Cancelled Items Report</h2>
+            <button class="close-section-btn" id="close-cancelled-btn">×</button>
+        </div>
+        <div class="report-controls">
+            <label for="cancelled-date">Select Date:</label>
+            <input type="date" id="cancelled-date" name="cancelled-date">
+            <button class="btn btn-primary" id="view-cancelled-btn">View Cancelled Items</button>
+        </div>
+        <div class="report-results" id="cancelled-results">
+            <p>Select a date and click "View Cancelled Items" to view cancelled orders.</p>
         </div>
     </div>
 
